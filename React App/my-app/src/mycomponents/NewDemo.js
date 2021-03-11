@@ -9,7 +9,7 @@ class NewDemo extends Component {
          var callbackFun = function(){
              alert("Dom is changed");
          }
-         ReactDOM.render(element, container, callbackFun);
+         ReactDOM.hydrate(element, container, callbackFun);
     }
 
     render() {
