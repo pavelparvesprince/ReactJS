@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+// import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 
 class Form5 extends Component {
@@ -10,24 +10,34 @@ class Form5 extends Component {
             mName : "",
             lName : "",
             email : "",
-            mobile : ""
+            mobile : "",
+            divstatusClass : "text-danger mt-2 d-none"        
          }
     }
 
-    onChangeHandler=(event)=>{
-        var names = event.target.name;
-        var values = event.target.value;
+    onChangeHandler=(e)=>{
+        var names = e.target.name;
+        var values = e.target.value;
         this.setState({[names]:[values]});
         if(names==="fName"){
-            var namePattern = /^([a-zA-Z ]){2,30}$/;
+            var namePattern =/^([a-zA-Z ]){1,30}$/;
+            if(names !== "" && !namePattern.test(values)){
+                this.setState({divstatusClass:"text-danger mt-2 d-block"});
+                console.log(values);
+            } 
+            else{
+                this.setState({divstatusClass:"text-danger mt-2 d-none"});
+            }      
+        }
+        if(names==="mName"){
+            var namePattern =/^([a-z A-Z ]){2,30}$/;
             if(!namePattern.test(values)){
-                alert("Wrong ");
+                console.log();
             }
         }
     }
 
     onSubmitHandler=()=>{
-
         alert("First Name : " + this.state.fName + "\nMiddle Name : " + this.state.mName + "\nLast Name : " + this.state.lName + "\nEmail : " + this.state.email + "\nMobile Number : " + this.state.mobile);
     }
 
@@ -40,8 +50,8 @@ class Form5 extends Component {
                         <label className="col-sm-2 col-form-label" >First Name </label>
                         <div className="col-sm-10">
                             <input onChange={this.onChangeHandler} name="fName" type="text" className="form-control" placeholder="First Name"></input> 
-                            <div className="text-danger mt-2" role="alert">
-                                First Name is Not Valid
+                            <div name="fnameErrorMessage" className={this.state.divstatusClass} role="alert">
+                                First Name Not in Valid Format
                             </div>
                         </div>
                     </div>
